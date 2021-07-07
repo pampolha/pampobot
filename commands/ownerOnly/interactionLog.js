@@ -8,6 +8,7 @@ module.exports =
     ownerOnly: true,
     callback: ({ interaction }) =>
     {
-        return '>:)', console.log(interaction);
+        console.log(interaction);
+        return '>:)';
     },
 };
