@@ -5,7 +5,7 @@ const { checkDM } = require('../functions/checkDM');
 
 const random = require('random');
 
-const affirmations = require(process.env.pampobotDir + 'data/affirmations');
+const { affirmations } = require(process.env.pampobotDir + 'data/affirmations');
 module.exports =
 {
     name: 'motivação',

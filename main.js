@@ -41,8 +41,6 @@ client.on('ready', async () =>
 		.setBotOwner(`${process.env.meuID}`)
 		.setDefaultPrefix(prefix);
 
-		
-	console.log(cmd);
 	console.log(`${client.user.username} está online.`);
 
 	client.user.setPresence({ status: 'online', activity: { name: '>help 🤖 || Não recebo mensagens no privado >:)', type: 'PLAYING' } });
