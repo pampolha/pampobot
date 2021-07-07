@@ -38,7 +38,7 @@ const distubeEvents = distube =>
     distube.on('initQueue', queue => 
     {
         queue.autoplay = false;
-        queue.volume = 5;
+        queue.volume = 15;
     });
 
     distube.on('playSong', (message, queue, song) =>

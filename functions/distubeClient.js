@@ -10,6 +10,7 @@
 
     const distube = new DisTube(client, { searchSongs: true, emitNewSongOnly: true, leaveOnFinish: true }).setMaxListeners(1);
 
+
     distubeEvents(distube);
 
     process.on('warning', e => console.warn(e.stack));

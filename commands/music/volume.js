@@ -13,9 +13,9 @@ module.exports =
 
         const queue = distube.getQueue(message);
         
-        if (!queue) return message.reply('a queue está vazia no momento!');
+        if (!queue) return message.reply('não tenho como mudar o volume de uma queue vazia!');
 
-        if (!args[0]) return message.reply(`o volume atual da queue é: **${queue.volume}**`);
+        if (!args[0]) return message.reply(`o volume atual da queue é: **${queue.volume}%**`);
 
         const newVolume = parseInt(args[0], 10);
         
@@ -23,6 +23,6 @@ module.exports =
         
         distube.setVolume(message, newVolume);
 
-        return message.reply(`o volume da queue agora é: **${queue.volume}**`);
+        return message.channel.send(`O volume da queue foi definido em **${queue.volume}%** por ${message.author}`);
     },
 };
