@@ -4,7 +4,6 @@ const { distube } = require('../../functions/distubeClient');
 module.exports =
 {
     name: 'filter',
-    aliases: ['filters'],
     description: 'Aplique um filtro de aúdio à queue!',
     slash: false,
     testOnly: false,

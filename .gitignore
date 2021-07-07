@@ -1,3 +1,9 @@
+# pampolha
+.eslint
+.vscode
+.github
+.package-lock
+
 # Logs
 logs
 *.log
