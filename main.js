@@ -65,5 +65,14 @@ client.on('message', mensagem =>
 	assinatura(mensagem);
 });
 
+// quando o bot entra numa sala de voz para tocar, ele se deixa surdo.
+client.on('voiceStateUpdate', (oldState, newState) =>
+{
+	if (!oldState.channelID)
+	{
+		newState.setSelfDeaf(true).catch(err => console.error(err));
+	}
+});
+
 // login do bot com token
 client.login(process.env.BOT_TOKEN);
