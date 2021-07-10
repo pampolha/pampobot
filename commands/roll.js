@@ -6,7 +6,7 @@ const { logSlash } = require('../functions/logSlash');
 const syntaxError = (msg = undefined) =>
         {
             const response = 'Número de lados/modificador inválido! Escolha um número inteiro de valor maior que 1 e menor que 2^53.' +
-            '\nCaso queira aplicar um modificador, escolha entre "+","-","x" ou "/" e depois um número que não seja 0, separando com espaços!';
+            '\nCaso queira aplicar um modificador, escolha entre "+","-","x" ou "/" e depois um número que siga as mesmas condições do número de lados, separando com espaços!';
             if (msg) return msg.reply(response);
             else return response;
         };
