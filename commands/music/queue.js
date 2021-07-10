@@ -23,7 +23,7 @@ module.exports =
         queue.songs.forEach((song, index) => 
         {
             embed.addField(`**${index === 0 ? index = 'Tocando agora' : index + 1 + '°'}**:`, 
-            `"**${song.name.replaceAll(/\|\||~~|[*`]|^> /gim, '\u200B')}**" - \`${song.formattedDuration}\`\n` +
+            `"**${song.name.replace(/\|\||~~|[*`]|^> /gim, '\u200B')}**" - \`${song.formattedDuration}\`\n` +
             `*pedido por: ${song.user}*`);
         });
 
