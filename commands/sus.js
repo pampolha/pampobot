@@ -11,7 +11,7 @@ module.exports =
     name: 'sus',
     description: 'Sus...',
     slash: false,
-    testOnly: true,
+    testOnly: false,
     callback: ({ message, interaction }) =>
     {
         if (checkDM(message, interaction)) return console.log('Comando bloqueado na DM.');
