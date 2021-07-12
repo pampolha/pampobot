@@ -34,7 +34,7 @@ module.exports =
                     if (apod.data.media_type === 'image')
                     {
                         embed.setImage(apod.data.hdurl);
-                        if (apod.data.copyright) embed.setFooter(`Foto por: ${apod.data.copyright.join(, )}`);
+                        if (apod.data.copyright) embed.setFooter(`Foto por: ${apod.data.copyright.join(', ')}`);
                     } 
                     else 
                     {
@@ -64,7 +64,7 @@ module.exports =
                     if (apod.data.media_type === 'image')
                     {
                         embed.setImage(apod.data.hdurl);
-                        if (apod.data.copyright) embed.setFooter(`Foto por: ${apod.data.copyright}`);
+                        if (apod.data.copyright) embed.setFooter(`Foto por: ${apod.data.copyright.join(', ')}`);
                     } 
                     else 
                     {
