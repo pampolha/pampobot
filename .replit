@@ -1,2 +1,2 @@
-language = "nix"
 run = "npm run app"
+language = "javascript"

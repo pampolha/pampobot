@@ -1,8 +1,9 @@
 # pampolha
-.eslint
-.vscode
-.github
-.package-lock
+*.eslint
+*.vscode
+*.github
+*.package-lock
+.replit
 
 # Logs
 logs
