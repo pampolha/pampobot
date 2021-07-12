@@ -3,7 +3,7 @@ const { checkDM } = require('../functions/checkDM');
 
 require('dotenv').config();
 
-const { affirmations } = require('C:/Users/pampo/Estudos/NodeJS/pampobot/data/affirmations.js');
+const { affirmations } = require(process.env.pampobotDir + 'data/affirmations.js');
 
 const random = require('random');
 
