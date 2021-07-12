@@ -13,20 +13,25 @@ module.exports =
     callback: ({ message, text, interaction }) =>
     {
         if (checkDM(message, interaction)) return console.log('Comando bloquado na DM.');
-        logSlash(interaction);
 
         const out = text;
 
         if (!out) return;
 
-        if (message && message.deletable === true)
+        if (message)
         {
-            message.delete()
-            .then(() => console.log(`pampobot apagou uma message no canal "${message.channel.name}" do servidor "${message.guild.name}". Mensagem original: "${out}"`));
+            if (message.deletable) 
+            {
+                message.delete().catch(err => console.error(err));
+                console.log(`pampobot apagou uma mensagem no canal "${message.channel.name}" do servidor "${message.guild.name}". Mensagem original: "${out}"`);
+            }
+
             return message.channel.send(out);
         }
         else
         {
+            logSlash(interaction);
+
             return out;
         }
 	},

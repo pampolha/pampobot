@@ -49,4 +49,4 @@ const affirmations =
     'Não é um erro, é um aprendizado!',
 ];
   
-module.exports = affirmations;
+module.exports = { affirmations };

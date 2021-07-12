@@ -1,18 +1,13 @@
 const { logSlash } = require('../functions/logSlash');
 const { checkDM } = require('../functions/checkDM');
 
-require ('dotenv').config();
-
 const random = require('random');
 
 const fs = require('fs');
 
-const syntaxError = (msg = undefined) =>
-        {
-            const response = 'Argumento inválido! Escolha pedra, papel ou tesoura após o comando!';
-            if (msg) return msg.reply(response);
-            else return response;
-        };
+require('dotenv').config();
+
+const { MessageEmbed } = require('discord.js');
 
 module.exports =
 {
@@ -22,13 +17,14 @@ module.exports =
     slash: 'both',
     testOnly: false,
     expectedArgs: '<escolha>',
-    minArgs: 1,
     callback: ({ message, args, interaction }) =>
     {  
         if (checkDM(message, interaction)) return console.log('Comando bloquado na DM.');
-        logSlash(interaction);
+
+        if (!message) logSlash(interaction);
 
         let userNumber;
+
         if (args[0])
         {
             switch (args[0].toLowerCase()) 
@@ -51,30 +47,20 @@ module.exports =
             return syntaxError(message);
         }
 
-        const mao = numero =>
-        {
-            switch (numero) 
-            {
-                case 1:
-                    return 'pedra';
-                case 2:
-                    return 'papel';
-                case 3:
-                    return 'tesoura';
-            }
-        };
-
         const botNumber = random.int(1, 3);
         const result = botNumber - userNumber;
 
-        const botMao = mao(botNumber);
-        const userMao = mao(userNumber);
+        const botMaoDefinida = definirMao(botNumber);
+        const userMaoDefinida = definirMao(userNumber);
+
+        const embed = new MessageEmbed().setColor('BLUE');
 
         if (result === 0)
         {
-            const empate = `você jogou: **${userMao}**, e eu joguei: **${botMao}!** Empate.`;
-            if (message) return message.reply(empate);
-            else return empate;
+            embed.setDescription(`Você jogou: **${userMaoDefinida}**, e eu joguei: **${botMaoDefinida}!**\n` + 'Empate.');
+
+            if (message) return message.channel.send(embed);
+            else return embed;
         }
         else if (result === 1 || result === -2)
         {
@@ -83,17 +69,40 @@ module.exports =
             const atual = (parseInt(antigo, 10) + 1).toString(10);
             fs.writeFileSync(wins, atual);
 
-            const vitoria = `você jogou: **${userMao}**, e eu joguei: **${botMao}!** ***EU VENCI!***\n` + 
-            `> *Meu número de vitórias agora é:*  **${fs.readFileSync(wins)}!**`;
+            embed.setDescription(`Você jogou: **${userMaoDefinida}**, e eu joguei: **${botMaoDefinida}!**\n` + '***EU VENCI!***')
+            .setFooter(`Meu número de vitórias agora é: ${fs.readFileSync(wins)}!`);
 
-            if (message) return message.reply(vitoria);
-            else return vitoria;
+            if (message) return message.channel.send(embed);
+            else return embed;
         }
-        else
+        else 
         {
-            const derrota = `você jogou: **${userMao}**, e eu joguei: **${botMao}!** *e-eu perdi?!*`;
-            if (message) return message.reply(derrota);
-            else return derrota;
+            embed.setDescription(`Você jogou: **${userMaoDefinida}**, e eu joguei: **${botMaoDefinida}!**\n` + '*e-eu perdi?!*');
+            if (message) return message.channel.send(embed);
+            else return embed;
         }
     },
+};
+
+const syntaxError = (msg = undefined) =>
+{
+    const errorEmbed = new MessageEmbed()
+    .setColor('RED')
+    .setDescription('Argumento inválido! Escolha pedra, papel ou tesoura após o comando!');
+
+    if (msg) return msg.channel.send(errorEmbed);
+    else return errorEmbed;
+};
+
+const definirMao = numero =>
+{
+    switch (numero) 
+    {
+        case 1:
+            return 'pedra';
+        case 2:
+            return 'papel';
+        case 3:
+            return 'tesoura';
+    }
 };

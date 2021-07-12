@@ -1,11 +1,14 @@
-require('dotenv').config();
-
 const { logSlash } = require('../functions/logSlash');
 const { checkDM } = require('../functions/checkDM');
 
+require('dotenv').config();
+
+const { affirmations } = require('C:/Users/pampo/Estudos/NodeJS/pampobot/data/affirmations.js');
+
 const random = require('random');
 
-const { affirmations } = require(process.env.pampobotDir + 'data/affirmations');
+const { MessageEmbed } = require('discord.js');
+
 module.exports =
 {
     name: 'motivação',
@@ -16,10 +19,22 @@ module.exports =
     callback: ({ message, interaction }) =>
     {
         if (checkDM(message, interaction)) return console.log('Comando bloquado na DM.');
-        logSlash(interaction);
+        
+        const frase = random.int(0, (affirmations.length - 1));
 
-        const escolha = random.int(0, (affirmations.length - 1)); 
-        if (message) return message.reply(`**${affirmations[escolha]}**`);
-        else return `**${affirmations[escolha]}**`;
+        const embed = new MessageEmbed()
+        .setColor('BLUE')
+        .setDescription(`**${affirmations[frase]}**`);
+
+        if (message)
+        {
+            return message.channel.send(embed);
+        }
+        else 
+        {
+            logSlash(interaction);
+            
+            return embed;
+        }
     },
 };

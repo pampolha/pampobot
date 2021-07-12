@@ -2,6 +2,7 @@ const { logSlash } = require('../functions/logSlash');
 const { checkDM } = require('../functions/checkDM');
 
 const random = require('random');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = 
 {
@@ -25,17 +26,19 @@ module.exports =
 			moeda = 'coroa';
             break;
 		}
+
+        const embed = new MessageEmbed().setColor('BLUE')
+        .setDescription(`A face para cima foi: ***${moeda}!***`);
         
         if (message)
         {
-            return message.channel
-            .send(`<@${message.author.id}> jogou uma moeda, e o face para cima foi: ***${moeda}!***`);
+            return message.channel.send(embed);
         }
         else
         {
             logSlash(interaction);
             
-            return `A face para cima foi: ***${moeda}!***`;
+            return embed;
         }
 	},
 };

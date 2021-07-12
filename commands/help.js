@@ -130,14 +130,14 @@ const texto =
 { name: 'Jokenpo:', value: 'Vou jogar uma disputa de jokenpo *(pedra, papel e tesoura)* com você quando você usar: `>jokenpo | >j <mão de escolha>`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false }],
 
-[{ name: 'Lorem Ipsum:', value: 'Vou digitar um parágrafo aleatório com palavras do livro `De finibus bonorum et malorum`, de Cícero, que pode começar com a frase padrão `Lorem Ipsum...` ao usar o argumento [t], quando você usar: `>loremipsum | >li [t]`.' +
+[{ name: 'Lorem Ipsum:', value: 'Vou digitar um parágrafo aleatório com palavras do livro `De finibus bonorum et malorum`, de Cícero, que pode começar com a frase padrão `Lorem Ipsum...` ao usar o argumento literal ["li"], quando você usar: `>loremipsum | >li ["li"]`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false },
 { name: 'APOD:', value: 'Receba o APOD (Astronomical Picture Of the Day) da NASA usando: `>apod | >nasa`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false },
 { name: 'Motivação:', value: 'Vou tentar te motivar se você usar: `>motivação | >motivacao | >m`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false },
 { name: 'Sus:', value: '`>sus`...' +
-'\n*Suporte para comando de `/`:*  ❌', inline: false }]];
+'\n*Suporte para comando de `/`:*  ✅', inline: false }]];
 
 const musica = 
 [[{ name: 'Play:', value: 'Pesquise uma música no youtube e selecione o resultado usando: `>play | >p <link ou texto para pesquisar>`.', inline: false },

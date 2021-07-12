@@ -1,14 +1,10 @@
 const { checkDM } = require('../functions/checkDM');
 const { logSlash } = require('../functions/logSlash');
+const { apiErrorEmbed } = require('../functions/apiErrorEmbed');
+
 
 const axios = require('axios').default;
-
-const syntaxError = (msg = undefined) =>
-        {
-            const response = 'Argumento inválido! Insira "t" após o comando para obter um começo de parágrafo no padrão Lorem Ipsum.';
-            if (msg) return msg.reply(response);
-            else return response;
-        };
+const { MessageEmbed } = require('discord.js');
 
 module.exports =
 {
@@ -22,40 +18,34 @@ module.exports =
     {
         if (checkDM(message, interaction)) return console.log('Comando bloquado na DM.');
 
-        if (message)
-        {
-            message.channel.startTyping();
+        if (message) message.channel.startTyping();
+        else logSlash(interaction);
 
-            axios.get('https://loripsum.net/api/1/medium/plaintext')
-            .then(li =>
-                {
-                    if (args[0] && args[0].toLowerCase() === 't') return message.channel.send(`> *${li.data.trim()}*`);
-                    else if (args[0] && args[0].toLowerCase() !== 't') return syntaxError(message);
-                    else return message.channel.send(`> *${li.data.substring(57).trim()}*`);
-                })
-            .catch(err => 
-                {
-                    console.error(err);
-                    message.channel.send('Ops! *Parece que algo deu errado ao tentar pegar as informações...*');
-                });
-            message.channel.stopTyping();
-        }
-        else
+        const embed = new MessageEmbed().setColor('BLUE');
+        
+        return axios.get('https://loripsum.net/api/1/medium/plaintext')
+        .then(li =>
         {
-            logSlash(interaction);
-            
-            return axios.get('https://loripsum.net/api/1/medium/plaintext')
-            .then(li =>
-                {
-                    if (args[0] && args[0].toLowerCase() === 't') return `> *${li.data.trim()}*`;
-                    else if (args[0] && args[0].toLowerCase() !== 't') return syntaxError;
-                    else return `> *${li.data.substring(57).trim()}*`;
-                })
-            .catch(err => 
-                {
-                    console.error(err);
-                    return 'Ops! *Parece que algo deu errado ao tentar pegar as informações...*';
-                });
-        }
+            let texto;
+
+            if (args[0] && args[0].toLowerCase() === 'li') texto = `*${li.data.trim()}*`;
+            else texto = `*${li.data.substring(57).trim()}*`;
+
+            embed.setDescription(texto);
+
+            if (message)
+            {
+                message.channel.stopTyping();
+                return message.channel.send(embed);
+            }
+            else
+            {
+                return embed;
+            }
+        })
+        .catch(err => 
+        {
+            return apiErrorEmbed(err, message);
+        });
     },
 };
