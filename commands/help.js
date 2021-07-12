@@ -17,7 +17,8 @@ module.exports =
 
         embed.setTitle('A ajuda está aqui! >:)')
         .addFields(help)
-        .setFooter('converse com o dev! -> pampolha#0007');
+        .setFooter('converse com o dev! -> pampolha#0007')
+        .setColor('GREEN');
 
 
         return message.channel.send(embed).then(msg => 
@@ -134,7 +135,9 @@ const texto =
 { name: 'APOD:', value: 'Receba o APOD (Astronomical Picture Of the Day) da NASA usando: `>apod | >nasa`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false },
 { name: 'Motivação:', value: 'Vou tentar te motivar se você usar: `>motivação | >motivacao | >m`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false }]];
+'\n*Suporte para comando de `/`:*  ✅', inline: false },
+{ name: 'Sus:', value: '`>sus`...' +
+'\n*Suporte para comando de `/`:*  ❌', inline: false }]];
 
 const musica = 
 [[{ name: 'Play:', value: 'Pesquise uma música no youtube e selecione o resultado usando: `>play | >p <link ou texto para pesquisar>`.', inline: false },
