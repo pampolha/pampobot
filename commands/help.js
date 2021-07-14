@@ -17,7 +17,7 @@ module.exports =
 
         embed.setTitle('A ajuda está aqui! >:)')
         .addFields(help)
-        .setFooter('converse com o dev! -> pampolha#0007')
+        .setFooter('converse com o dev! -> pampolha#8477')
         .setColor('GREEN');
 
 
