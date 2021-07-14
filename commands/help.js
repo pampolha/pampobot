@@ -142,6 +142,11 @@ const texto =
 { name: 'Motivação:', value: 'Vou tentar te motivar se você usar: `>motivação | >motivacao | >m`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false },
 { name: 'Sus:', value: '`>sus`...' +
+'\n*Suporte para comando de `/`:*  ✅', inline: false }],
+
+[{ name: 'GitHub:', value: 'Você pode ir ao meu repositório do GitHub ao usar: `>github | >git`.' +
+'\n*Suporte para comando de `/`:*  ✅', inline: false },
+{ name: 'Convite:', value: 'Você pode adicionar o pampobot a outros servidores ao usar: `>convite | >invite`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false }]];
 
 const musica = 
