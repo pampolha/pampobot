@@ -122,7 +122,7 @@ module.exports =
 const attPagina = (embed, msg, choice, commands, paginaAtual) =>
 {
     return msg.edit(embed.setAuthor('Legenda: `<>` são argumentos obrigatórios, `[]` são argumentos opcionais.')
-    .setTitle(`${choice}Comandos:`)
+    .setTitle(`${choice} Comandos:`)
     .spliceFields(0, embed.fields.length, commands[paginaAtual])
     .setFooter(`Página ${paginaAtual + 1}/${commands.length}`));
 };

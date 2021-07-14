@@ -135,6 +135,7 @@ const editEmbed = (embed, msg, songDesc, paginaAtual, queue, h) =>
 
 const attFooter = (paginaAtual, queue, h) => 
 {
-    return `Duração total da queue: ${queue.formattedDuration}\n` + 
+    return `Duração total da queue: ${queue.formattedDuration}\n` +
+    `O autoplay está ${queue.autoplay ? 'ligado' : 'desligado'}\n` + 
     `Página atual: ${paginaAtual + 1}/${h + 1}`;
 };

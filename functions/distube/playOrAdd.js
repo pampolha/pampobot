@@ -12,8 +12,9 @@ const playOrAdd = (message, queue, song, playlist = undefined) =>
             embed
             .setTitle('Tocando agora:')
             .setDescription(`Playlist "${discordReplace(playlist.name)}" - \`${playlist.formattedDuration}\`\n` + 
-            `Pedida por: ${playlist.user}\n` +
-            `Número de músicas nessa playlist: ${playlist.songs.length}`)
+            `Pedida por: ${playlist.user}`)
+            .setFooter(`Número de músicas nessa playlist: ${playlist.songs.length}\n` +
+            `O autoplay está ${queue.autoplay ? 'ligado' : 'desligado'}`)
             .setColor('BLUE');
         }
         else
@@ -22,7 +23,8 @@ const playOrAdd = (message, queue, song, playlist = undefined) =>
             .setTitle('Tocando agora:')
             .setDescription(`"${discordReplace(song.name)}" - \`${song.formattedDuration}\`\n` + 
             `Pedido por ${message.author}`)
-            .setFooter(`Número de músicas restantes na queue: ${queue.songs.length - 1}`)
+            .setFooter(`Número de músicas restantes na queue: ${queue.songs.length - 1}\n` +
+            `O autoplay está ${queue.autoplay ? 'ligado' : 'desligado'}`)
             .setURL(song.url); 
         }
     }

@@ -9,6 +9,8 @@ const musica =
 { name: 'Stop:', value: 'Termine a execução das músicas e limpe a queue usando: `>stop | >exit`.', inline: false },
 { name: 'Filter:', value: 'Aplique um filtro de áudio à queue atual usando: `>filter | >fil <nome do filtro>`.\n' +
 'Para ver o filtro atual e os disponíveis, use apenas `>filter`.', inline: false },
-{ name: 'Clear:', value: 'Limpe todas as músicas da queue, deixando apenas a música atual usando: `>clear | >cl`.', inline: false }]];
+{ name: 'Clear:', value: 'Limpe todas as músicas da queue, deixando apenas a música atual usando: `>clear | >cl`.', inline: false }],
+
+[{ name: 'Autoplay:', value: 'Ligue ou desligue o autoplay (tocar músicas recomendadas mesmo após a queue acabar) ao usar: `autoplay | >ap`.', inline: false }]];
 
 module.exports = { musica };
