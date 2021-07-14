@@ -6,7 +6,7 @@ const { MessageEmbed } = require('discord.js');
 
 const { checkDM } = require('../functions/checkDM');
 const { logSlash } = require('../functions/logSlash');
-const { apiErrorEmbed } = require('../functions/apiErrorEmbed');
+const { connectionErrorEmbed } = require('../functions/connectionErrorEmbed');
 
 module.exports =
 {
@@ -54,7 +54,7 @@ module.exports =
         })
         .catch(err => 
         {
-            return apiErrorEmbed(err, message);
+            return connectionErrorEmbed(err, message);
         });
     },
 };

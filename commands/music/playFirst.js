@@ -1,6 +1,7 @@
-const { distube } = require('../../functions/distubeClient');
+const { distube } = require('../../functions/distube/distubeClient');
 
 const { checkDM } = require('../../functions/checkDM');
+const { MessageEmbed } = require('discord.js');
 
 module.exports =
 {
@@ -13,15 +14,38 @@ module.exports =
     {
         if (checkDM(message)) return console.log('Comando bloquado na DM.');
 
-        if (!text) return message.reply('você precisa especificar um link ou texto para ser pesquisado!');
+        const embed = new MessageEmbed();
 
-        if (!message.member.voice) return message.reply('você precisa estar em um canal de voz para usar esse comando!');
+        if (!text) 
+        {
+            embed
+            .setDescription('Você precisa especificar um link ou texto para ser pesquisado!')
+            .setColor('RED');
 
-        message.react('🆗');
+            return message.channel.send(embed);
+        }
+        else if (!message.member.voice) 
+        {   
+            embed
+            .setDescription('Você precisa estar em um canal de voz para usar esse comando!')
+            .setColor('RED');
 
-        return distube.search(text).then(result =>
+            return message.channel.send(embed);
+        }
+        else if (text.startsWith('https://'))
+        {
+            distube.play(message, text);
+        }
+        else
+        {
+            message.react('🆗');
+
+            return distube.search(text).then(result =>
             {
+                result = result.filter(element => element.formattedDuration);
+
                 return distube.play(message, result[0]);
             });
+        }
     },
 };

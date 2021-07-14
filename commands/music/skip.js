@@ -1,6 +1,8 @@
+const { MessageEmbed } = require('discord.js');
 const { checkDM } = require('../../functions/checkDM');
+const { discordReplace } = require('../../functions/discordReplace');
 
-const { distube } = require('../../functions/distubeClient');
+const { distube } = require('../../functions/distube/distubeClient');
 
 module.exports =
 {
@@ -15,10 +17,24 @@ module.exports =
 
         const queue = distube.getQueue(message);
 
-        if (queue.songs.length < 1) return message.reply('eu não tenho como pular para a próxima música!');
-        
-        message.channel.send(`"**${queue.songs[0].name.replaceAll(/\|\||~~|[*`]|^> /gim, '\u200B')}**" - \`${queue.songs[0].formattedDuration}\` foi pulado por ${message.author}`);
-        
-        return distube.skip(message);
+        const embed = new MessageEmbed();
+
+        if (!queue) 
+        {
+            embed
+            .setDescription('Não há música para pular!')
+            .setColor('RED');
+        }
+        else
+        {
+            distube.skip(message);
+
+            embed
+            .setDescription(`"${discordReplace(queue.songs[0].name)}" - \`${queue.songs[0].formattedDuration}\`\n` + 
+            `Foi pulado por ${message.author}`)
+            .setColor('BLUE');
+        }
+
+        return message.channel.send(embed);
     },
 };

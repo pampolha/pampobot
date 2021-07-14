@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
-const apiErrorEmbed = (err, message = undefined) =>
+const connectionErrorEmbed = (err, message = undefined) =>
 {
     console.error(err);
 
@@ -12,4 +12,4 @@ const apiErrorEmbed = (err, message = undefined) =>
     else return embed;
 };
 
-module.exports = { apiErrorEmbed };
+module.exports = { connectionErrorEmbed };

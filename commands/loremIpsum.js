@@ -1,6 +1,6 @@
 const { checkDM } = require('../functions/checkDM');
 const { logSlash } = require('../functions/logSlash');
-const { apiErrorEmbed } = require('../functions/apiErrorEmbed');
+const { connectionErrorEmbed } = require('../functions/connectionErrorEmbed');
 
 
 const axios = require('axios').default;
@@ -45,7 +45,7 @@ module.exports =
         })
         .catch(err => 
         {
-            return apiErrorEmbed(err, message);
+            return connectionErrorEmbed(err, message);
         });
     },
 };

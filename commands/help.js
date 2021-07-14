@@ -22,95 +22,100 @@ module.exports =
 
 
         return message.channel.send(embed).then(msg => 
+        {
+            msg.react('📄');
+
+            setTimeout(() => 
             {
-                msg.react('📄');
+                msg.react('🎵');
+            }, 1000 * 0.7);
+
+            const filter1 = (reaction, user) => (reaction.emoji.name === '📄' || reaction.emoji.name === '🎵') && user.id === message.author.id;
+            const filter2 = (reaction, user) => (reaction.emoji.name === '⬅' || reaction.emoji.name === '➡') && user.id === message.author.id;
+
+            const collector1 = msg.createReactionCollector(filter1, { time: 1000 * 60, max: 1, dispose : true });
+
+            collector1.once('collect', reaction =>
+            {
+                const choice = reaction.emoji.name;
+                
+                const meu = choice === '📄' ? texto : musica;
+                
+                let paginaAtual = 0;
+
+                attPagina(embed, msg, choice, meu, paginaAtual);
 
                 setTimeout(() => 
                 {
-                    msg.react('🎵');
-                }, 1000 * 0.7);
-
-                const filter1 = (reaction, user) => (reaction.emoji.name === '📄' || reaction.emoji.name === '🎵') && user.id === message.author.id;
-                const filter2 = (reaction, user) => (reaction.emoji.name === '⬅' || reaction.emoji.name === '➡') && user.id === message.author.id;
-
-                const collector1 = msg.createReactionCollector(filter1, { time: 1000 * 60, max: 1, dispose : true });
-
-                collector1.once('collect', reaction =>
-                {
-                    const choice = reaction.emoji.name;
-                    
-                    const meu = choice === '📄' ? texto : musica;
-                    
-                    let paginaAtual = 0;
-
-                    attPagina(embed, msg, choice, meu, paginaAtual);
+                    msg.reactions.removeAll().catch();
 
                     setTimeout(() => 
                     {
-                        msg.reactions.removeAll().catch();
+                        msg.react('⬅');
+                    }, 1000 * 0.7);
 
-                        setTimeout(() => 
-                        {
-                            msg.react('⬅');
-                        }, 1000 * 0.7);
-
-                        setTimeout(() => 
-                        {
-                            msg.react('➡');
-                        }, 1000 * 1.5);
-                    }, 1000 * 0.7); 
-                    
-                    collector1.stop();
-
-                    const collector2 = msg.createReactionCollector(filter2, { time: 1000 * 120, dispose: true });
-                    
-                    collector2.on('collect', _reaction =>
+                    setTimeout(() => 
                     {
-                        if (_reaction.emoji.name === '⬅')
-                        {
-                            paginaAtual--;
-                            if (paginaAtual < 0) paginaAtual = meu.length - 1;
-                            else if (paginaAtual >= meu.length) paginaAtual = 0;
+                        msg.react('➡');
+                    }, 1000 * 1.5);
+                }, 1000 * 0.7); 
+                
+                collector1.stop();
 
-                            attPagina(embed, msg, choice, meu, paginaAtual);
-                        }
-                        else
-                        {
-                            paginaAtual++;
-                            if (paginaAtual < 0) paginaAtual = meu.length - 1;
-                            else if (paginaAtual >= meu.length) paginaAtual = 0;
-                            
-                            attPagina(embed, msg, choice, meu, paginaAtual);
-                        }
-                    });
-                    collector2.on('remove', _reaction => 
+                const collector2 = msg.createReactionCollector(filter2, { time: 1000 * 120, dispose: true });
+                
+                collector2.on('collect', _reaction =>
+                {
+                    if (_reaction.emoji.name === '⬅')
                     {
-                        if (_reaction.emoji.name === '⬅')
-                        {
-                            paginaAtual--;
-                            if (paginaAtual < 0) paginaAtual = meu.length - 1;
-                            else if (paginaAtual >= meu.length) paginaAtual = 0;
+                        paginaAtual--;
 
-                            attPagina(embed, msg, choice, meu, paginaAtual);
-                        }
-                        else
-                        {
-                            paginaAtual++;
-                            if (paginaAtual < 0) paginaAtual = meu.length - 1;
-                            else if (paginaAtual >= meu.length) paginaAtual = 0;
-                            
-                            attPagina(embed, msg, choice, meu, paginaAtual);
-                        }
-                    });
+                        if (paginaAtual < 0) paginaAtual = meu.length - 1;
+                        else if (paginaAtual >= meu.length) paginaAtual = 0;
+
+                        attPagina(embed, msg, choice, meu, paginaAtual);
+                    }
+                    else
+                    {
+                        paginaAtual++;
+                        
+                        if (paginaAtual < 0) paginaAtual = meu.length - 1;
+                        else if (paginaAtual >= meu.length) paginaAtual = 0;
+                        
+                        attPagina(embed, msg, choice, meu, paginaAtual);
+                    }
                 });
-            })
-            .catch(err => console.error(err));
+
+                collector2.on('remove', _reaction => 
+                {
+                    if (_reaction.emoji.name === '⬅')
+                    {
+                        paginaAtual--;
+
+                        if (paginaAtual < 0) paginaAtual = meu.length - 1;
+                        else if (paginaAtual >= meu.length) paginaAtual = 0;
+
+                        attPagina(embed, msg, choice, meu, paginaAtual);
+                    }
+                    else
+                    {
+                        paginaAtual++;
+                        
+                        if (paginaAtual < 0) paginaAtual = meu.length - 1;
+                        else if (paginaAtual >= meu.length) paginaAtual = 0;
+                        
+                        attPagina(embed, msg, choice, meu, paginaAtual);
+                    }
+                });
+            });
+        })
+        .catch(err => console.error(err));
      },
  };
 
-const attPagina = (embed, message, choice, meu, paginaAtual) =>
+const attPagina = (embed, msg, choice, meu, paginaAtual) =>
 {
-    return message.edit(embed.setAuthor('Legenda: `<>` são argumentos obrigatórios, `[]` são argumentos opcionais.')
+    return msg.edit(embed.setAuthor('Legenda: `<>` são argumentos obrigatórios, `[]` são argumentos opcionais.')
     .setTitle(`*${choice}Comandos:*`)
     .spliceFields(0, embed.fields.length, meu[paginaAtual])
     .setFooter(`Página ${paginaAtual + 1}/${meu.length}`));

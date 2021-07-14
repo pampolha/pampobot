@@ -8,7 +8,7 @@
 
     const DisTube = require('distube');
 
-    const distube = new DisTube(client, { searchSongs: true, emitNewSongOnly: true, leaveOnFinish: true }).setMaxListeners(1);
+    const distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: true, leaveOnFinish: true }).setMaxListeners(1);
 
 
     distubeEvents(distube);

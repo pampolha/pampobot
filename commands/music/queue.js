@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { checkDM } = require('../../functions/checkDM');
-const { distube } = require('../../functions/distubeClient');
+const { discordReplace } = require('../../functions/discordReplace');
+const { distube } = require('../../functions/distube/distubeClient');
 
 module.exports =
 {
@@ -16,19 +17,124 @@ module.exports =
         const queue = distube.getQueue(message);
 
         const embed = new MessageEmbed()
-        .setTitle('***Queue atual:***');
+        .setAuthor('Queue');
 
-        if (!queue) return message.reply(embed.addField('**A queue está vazia!**', '*adicione alguma música usando ">play"!*'));
-
-        queue.songs.forEach((song, index) => 
+        if (!queue) 
         {
-            embed.addField(`**${index === 0 ? index = 'Tocando agora' : index + 1 + '°'}**:`, 
-            `"**${song.name.replace(/\|\||~~|[*`]|^> /gim, '\u200B')}**" - \`${song.formattedDuration}\`\n` +
-            `*pedido por: ${song.user}*`);
-        });
+            embed
+            .setDescription('A queue está vazia!')
+            .setColor('RED');
 
-        embed.setFooter(`Duração total da queue: ${queue.formattedDuration}`);
-        
-        return message.channel.send(embed);
+            return message.channel.send(embed);
+        }
+        else
+        {
+            const songDesc = [];
+
+            let i = 0;
+            let h = 0;
+
+            queue.songs.forEach((song, index) => 
+            {
+                if (i !== 0 && i % 5 === 0) h++;
+                if (i % 5 === 0) songDesc[h] = '';
+
+                songDesc[h] += `**${index === 0 ? '[ Música atual ]' : '[ ' + (index + 1) + ' ]'} ⮯**\n` + 
+                `"${discordReplace(song.name)}" - \`${song.formattedDuration}\`\n` +
+                `Pedido por: ${song.user}` + 
+                '\n\n';
+                
+                i++;
+            });
+
+            let paginaAtual = 0;
+
+            embed
+            .setDescription(songDesc[paginaAtual])
+            .setFooter(attFooter(paginaAtual, queue, h))
+            .setColor('BLUE');
+
+            if (h === 0) 
+            {
+                return message.channel.send(embed);
+            }
+            else
+            {                
+                message.channel.send(embed)
+                .then(msg =>
+                {   
+                    msg.react('⬅');
+
+                    setTimeout(() => 
+                    {
+                        msg.react('➡');
+                    }, 1000 * 1);
+
+                    const filter = (reaction, user) => (reaction.emoji.name === '⬅' || reaction.emoji.name === '➡') && user.id === message.author.id;
+
+                    const collector = msg.createReactionCollector(filter, { time: 1000 * 60, dispose: true });
+
+                    collector.on('collect', reaction =>
+                    {
+                        const choice = reaction.emoji.name;
+
+                        if (choice === '⬅')
+                        {
+                            paginaAtual--;
+
+                            if (paginaAtual < 0) paginaAtual = h;
+                            else if (paginaAtual > h) paginaAtual = 0;
+                        
+                            return editEmbed(embed, msg, songDesc, paginaAtual, queue, h);
+                        }
+                        else
+                        {
+                            paginaAtual++;
+
+                            if (paginaAtual < 0) paginaAtual = h;
+                            else if (paginaAtual > h) paginaAtual = 0;
+
+                            return editEmbed(embed, msg, songDesc, paginaAtual, queue, h);
+                        }
+                    });
+
+                    collector.on('remove', reaction =>
+                    {
+                        const choice = reaction.emoji.name;
+
+                        if (choice === '⬅')
+                        {
+                            paginaAtual--;
+
+                            if (paginaAtual < 0) paginaAtual = h;
+                            else if (paginaAtual > h) paginaAtual = 0;
+                        
+                            return editEmbed(embed, msg, songDesc, paginaAtual, queue, h);
+                        }
+                        else
+                        {
+                            paginaAtual++;
+
+                            if (paginaAtual < 0) paginaAtual = h;
+                            else if (paginaAtual > h) paginaAtual = 0;
+
+                            return editEmbed(embed, msg, songDesc, paginaAtual, queue, h);
+                        }
+                    });
+                });
+            }
+        }
 	},
+};
+
+const editEmbed = (embed, msg, songDesc, paginaAtual, queue, h) => 
+{
+    return msg.edit(embed.setDescription(songDesc[paginaAtual])
+        .setFooter(attFooter(paginaAtual, queue, h)));
+};
+
+const attFooter = (paginaAtual, queue, h) => 
+{
+    return `Duração total da queue: ${queue.formattedDuration}\n` + 
+    `Página atual: ${paginaAtual + 1}/${h + 1}`;
 };
