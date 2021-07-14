@@ -1,4 +1,6 @@
 const { checkDM } = require('../functions/checkDM');
+const { texto } = require('../data/textCommands');
+const { musica } = require('../data/musicCommands');
 
 const Discord = require('discord.js');
 
@@ -15,13 +17,14 @@ module.exports =
         
         const embed = new Discord.MessageEmbed();
 
-        embed.setTitle('A ajuda está aqui! >:)')
+        embed
+        .setTitle('A ajuda está aqui! >:)')
         .addFields(help)
         .setFooter('converse com o dev! -> pampolha#8477')
         .setColor('GREEN');
 
-
-        return message.channel.send(embed).then(msg => 
+        return message.channel.send(embed)
+        .then(msg => 
         {
             msg.react('📄');
 
@@ -30,24 +33,26 @@ module.exports =
                 msg.react('🎵');
             }, 1000 * 0.7);
 
-            const filter1 = (reaction, user) => (reaction.emoji.name === '📄' || reaction.emoji.name === '🎵') && user.id === message.author.id;
-            const filter2 = (reaction, user) => (reaction.emoji.name === '⬅' || reaction.emoji.name === '➡') && user.id === message.author.id;
+            const filter1 = (reaction1, user) => (reaction1.emoji.name === '📄' || reaction1.emoji.name === '🎵') && user.id === message.author.id;
+            const filter2 = (reaction1, user) => (reaction1.emoji.name === '⬅' || reaction1.emoji.name === '➡') && user.id === message.author.id;
 
             const collector1 = msg.createReactionCollector(filter1, { time: 1000 * 60, max: 1, dispose : true });
 
-            collector1.once('collect', reaction =>
+            collector1.once('collect', reaction1 =>
             {
-                const choice = reaction.emoji.name;
+                const choice = reaction1.emoji.name;
                 
-                const meu = choice === '📄' ? texto : musica;
+                const commands = choice === '📄' ? texto : musica;
                 
                 let paginaAtual = 0;
 
-                attPagina(embed, msg, choice, meu, paginaAtual);
+                attPagina(embed, msg, choice, commands, paginaAtual);
 
                 setTimeout(() => 
                 {
-                    msg.reactions.removeAll().catch();
+                    msg.reactions
+                    .removeAll()
+                    .catch(err => console.error(err));
 
                     setTimeout(() => 
                     {
@@ -58,53 +63,54 @@ module.exports =
                     {
                         msg.react('➡');
                     }, 1000 * 1.5);
+
                 }, 1000 * 0.7); 
                 
                 collector1.stop();
 
                 const collector2 = msg.createReactionCollector(filter2, { time: 1000 * 120, dispose: true });
                 
-                collector2.on('collect', _reaction =>
+                collector2.on('collect', reaction2 =>
                 {
-                    if (_reaction.emoji.name === '⬅')
+                    if (reaction2.emoji.name === '⬅')
                     {
                         paginaAtual--;
 
-                        if (paginaAtual < 0) paginaAtual = meu.length - 1;
-                        else if (paginaAtual >= meu.length) paginaAtual = 0;
+                        if (paginaAtual < 0) paginaAtual = commands.length - 1;
+                        else if (paginaAtual > commands.length - 1) paginaAtual = 0;
 
-                        attPagina(embed, msg, choice, meu, paginaAtual);
+                        attPagina(embed, msg, choice, commands, paginaAtual);
                     }
                     else
                     {
                         paginaAtual++;
                         
-                        if (paginaAtual < 0) paginaAtual = meu.length - 1;
-                        else if (paginaAtual >= meu.length) paginaAtual = 0;
+                        if (paginaAtual < 0) paginaAtual = commands.length - 1;
+                        else if (paginaAtual > commands.length - 1) paginaAtual = 0;
                         
-                        attPagina(embed, msg, choice, meu, paginaAtual);
+                        attPagina(embed, msg, choice, commands, paginaAtual);
                     }
                 });
 
-                collector2.on('remove', _reaction => 
+                collector2.on('remove', reaction2 => 
                 {
-                    if (_reaction.emoji.name === '⬅')
+                    if (reaction2.emoji.name === '⬅')
                     {
                         paginaAtual--;
 
-                        if (paginaAtual < 0) paginaAtual = meu.length - 1;
-                        else if (paginaAtual >= meu.length) paginaAtual = 0;
+                        if (paginaAtual < 0) paginaAtual = commands.length - 1;
+                        else if (paginaAtual > commands.length - 1) paginaAtual = 0;
 
-                        attPagina(embed, msg, choice, meu, paginaAtual);
+                        attPagina(embed, msg, choice, commands, paginaAtual);
                     }
                     else
                     {
                         paginaAtual++;
                         
-                        if (paginaAtual < 0) paginaAtual = meu.length - 1;
-                        else if (paginaAtual >= meu.length) paginaAtual = 0;
+                        if (paginaAtual < 0) paginaAtual = commands.length - 1;
+                        else if (paginaAtual > commands.length - 1) paginaAtual = 0;
                         
-                        attPagina(embed, msg, choice, meu, paginaAtual);
+                        attPagina(embed, msg, choice, commands, paginaAtual);
                     }
                 });
             });
@@ -113,51 +119,14 @@ module.exports =
      },
  };
 
-const attPagina = (embed, msg, choice, meu, paginaAtual) =>
+const attPagina = (embed, msg, choice, commands, paginaAtual) =>
 {
     return msg.edit(embed.setAuthor('Legenda: `<>` são argumentos obrigatórios, `[]` são argumentos opcionais.')
-    .setTitle(`*${choice}Comandos:*`)
-    .spliceFields(0, embed.fields.length, meu[paginaAtual])
-    .setFooter(`Página ${paginaAtual + 1}/${meu.length}`));
+    .setTitle(`${choice}Comandos:`)
+    .spliceFields(0, embed.fields.length, commands[paginaAtual])
+    .setFooter(`Página ${paginaAtual + 1}/${commands.length}`));
 };
 
 const help = { name: 'Instruções:', value: 'Para ver os comandos de texto, reaja com o emoji 📄!\n' +
 'Para ver os comandos de música, reaja com o emoji 🎵!\n\n' +
 'Para trocar de página, reaja com os emojis ⬅ ou ➡!', inline: false };
-
-const texto =
-[[{ name: 'Cara ou coroa:', value: 'Jogue uma moeda e veja o resultado usando: `>caracoroa | >c | >cc`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false },
-{ name: 'Roll:', value: 'Jogue um dado com até um modificador usando: `>roll | >r [num. lados] [+, -, x, /] [num. modificador]`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false },
-{ name: 'Out:', value: 'Vou imitar sua mensagem (e apagar ela, se eu tiver permissão) quando você usar: `>out | >o <mensagem>`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false },
-{ name: 'Jokenpo:', value: 'Vou jogar uma disputa de jokenpo *(pedra, papel e tesoura)* com você quando você usar: `>jokenpo | >j <mão de escolha>`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false }],
-
-[{ name: 'Lorem Ipsum:', value: 'Vou digitar um parágrafo aleatório com palavras do livro `De finibus bonorum et malorum`, de Cícero, que pode começar com a frase padrão `Lorem Ipsum...` ao usar o argumento literal ["li"], quando você usar: `>loremipsum | >li ["li"]`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false },
-{ name: 'APOD:', value: 'Receba o APOD (Astronomical Picture Of the Day) da NASA usando: `>apod | >nasa`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false },
-{ name: 'Motivação:', value: 'Vou tentar te motivar se você usar: `>motivação | >motivacao | >m`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false },
-{ name: 'Sus:', value: '`>sus`...' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false }],
-
-[{ name: 'GitHub:', value: 'Você pode ir ao meu repositório do GitHub ao usar: `>github | >git`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false },
-{ name: 'Convite:', value: 'Você pode adicionar o pampobot a outros servidores ao usar: `>convite | >invite`.' +
-'\n*Suporte para comando de `/`:*  ✅', inline: false }]];
-
-const musica = 
-[[{ name: 'Play:', value: 'Pesquise uma música no youtube e selecione o resultado usando: `>play | >p <link ou texto para pesquisar>`.', inline: false },
-{ name: 'Play first:', value: 'Toque a primeira música encontrada com a pesquisa usando: `>playfirst | >playf | >pf <link ou texto para pesquisar>`.', inline: false },
-{ name: 'Queue:', value: 'Veja a fila de músicas atual usando: `>queue | >fila | >q`.', inline: false },
-{ name: 'Volume:', value: 'Ajuste o volume das músicas da queue usando: `>volume | >vl <número de 0 a 100>`.\n' +
-'Para ver o volume atual, use apenas `>volume`.', inline: false }],
-
-[{ name: 'Skip:', value: 'Pule a música atual da queue usando: `skip | >sk`.', inline: false },
-{ name: 'Stop:', value: 'Termine a execução das músicas e limpe a queue usando: `>stop | >exit`.', inline: false },
-{ name: 'Filter:', value: 'Aplique um filtro de áudio à queue atual usando: `>filter | >fil <nome do filtro>`.\n' +
-'Para ver o filtro atual e os disponíveis, use apenas `>filter`.', inline: false },
-{ name: 'Clear:', value: 'Limpe todas as músicas da queue, deixando apenas a música atual usando: `>clear | >cl`.', inline: false }]];
