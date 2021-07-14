@@ -5,6 +5,7 @@ const { distube } = require('../../functions/distube/distubeClient');
 module.exports =
 {
     name: 'volume',
+    aliases: ['vl'],
     description: 'Ajuste o volume da queue!',
     slash: false,
     testOnly: false,
