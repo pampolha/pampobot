@@ -19,7 +19,7 @@ const distubeEvents = distube =>
 
     distube.on('playList', (message, queue, playlist, song) =>
     { 
-        return playOrAdd(message, queue, song);
+        return playOrAdd(message, queue, song, playlist);
     });
     
     distube.on('addList', (message, queue, playlist) => 
