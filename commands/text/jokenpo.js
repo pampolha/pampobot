@@ -64,7 +64,7 @@ module.exports =
         }
         else if (result === 1 || result === -2)
         {
-            const wins = process.env.pampobotDir + 'data/jokenpoWins.txt';
+            const wins = process.env.pampobotDir + 'data/commands/jokenpoWins.txt';
             const antigo = fs.readFileSync(wins, 'utf-8');
             const atual = (parseInt(antigo, 10) + 1).toString(10);
             fs.writeFileSync(wins, atual);
