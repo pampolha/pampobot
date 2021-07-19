@@ -9,7 +9,7 @@ const client = new Discord.Client();
 const WOKCommands = require('wokcommands');
 
 // const { checarComandos } = require('./functions/checarComando');
-const { assinatura } = require('./functions/assinatura');
+const { assinatura } = require('./functions/features/assinatura');
 
 // usando o prefixo como uma variável pra facilitar a manutenção
 const prefix = '>';

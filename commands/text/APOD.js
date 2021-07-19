@@ -4,9 +4,9 @@ const axios = require('axios').default;
 
 const { MessageEmbed } = require('discord.js');
 
-const { checkDM } = require('../functions/checkDM');
-const { logSlash } = require('../functions/logSlash');
-const { connectionErrorEmbed } = require('../functions/connectionErrorEmbed');
+const { checkDM } = require('../../functions/common/checkDM');
+const { logSlash } = require('../../functions/common/logSlash');
+const { connectionErrorEmbed } = require('../../functions/errors/connectionErrorEmbed');
 
 module.exports =
 {
@@ -19,7 +19,6 @@ module.exports =
     {
         if (checkDM(message, interaction)) return console.log('Comando bloquado na DM.');
 
-        if (message) message.channel.startTyping();
         else logSlash(interaction);
 
         return axios.get(`https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_KEY}`)
@@ -44,7 +43,6 @@ module.exports =
 
             if (message)
             {
-                message.channel.stopTyping();
                 return message.channel.send(embed);
             }
             else 

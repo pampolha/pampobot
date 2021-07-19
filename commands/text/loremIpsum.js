@@ -1,6 +1,6 @@
-const { checkDM } = require('../functions/checkDM');
-const { logSlash } = require('../functions/logSlash');
-const { connectionErrorEmbed } = require('../functions/connectionErrorEmbed');
+const { checkDM } = require('../../functions/common/checkDM');
+const { logSlash } = require('../../functions/common/logSlash');
+const { connectionErrorEmbed } = require('../../functions/errors/connectionErrorEmbed');
 
 
 const axios = require('axios').default;
@@ -18,7 +18,6 @@ module.exports =
     {
         if (checkDM(message, interaction)) return console.log('Comando bloquado na DM.');
 
-        if (message) message.channel.startTyping();
         else logSlash(interaction);
 
         const embed = new MessageEmbed().setColor('BLUE');
@@ -35,7 +34,6 @@ module.exports =
 
             if (message)
             {
-                message.channel.stopTyping();
                 return message.channel.send(embed);
             }
             else

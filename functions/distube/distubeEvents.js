@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
-const { connectionErrorEmbed } = require('../connectionErrorEmbed');
-const { discordReplace } = require('../discordReplace');
+const { connectionErrorEmbed } = require('../errors/connectionErrorEmbed');
+const { discordReplace } = require('../common/discordReplace');
 const { playOrAdd } = require('./playOrAdd');
 
 const embed = new MessageEmbed();

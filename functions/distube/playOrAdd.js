@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const { discordReplace } = require('../discordReplace');
+const { discordReplace } = require('../common/discordReplace');
 
 const playOrAdd = (message, queue, song, playlist = undefined) =>
 {

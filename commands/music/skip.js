@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
-const { checkDM } = require('../../functions/checkDM');
-const { discordReplace } = require('../../functions/discordReplace');
+const { checkDM } = require('../../functions/common/checkDM');
+const { discordReplace } = require('../../functions/common/discordReplace');
 
 const { distube } = require('../../functions/distube/distubeClient');
 

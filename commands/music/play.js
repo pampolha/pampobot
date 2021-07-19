@@ -1,9 +1,9 @@
 const { distube } = require('../../functions/distube/distubeClient');
 
-const { checkDM } = require('../../functions/checkDM');
+const { checkDM } = require('../../functions/common/checkDM');
 const { MessageEmbed } = require('discord.js');
-const { discordReplace } = require('../../functions/discordReplace');
-const { connectionErrorEmbed } = require('../../functions/connectionErrorEmbed');
+const { discordReplace } = require('../../functions/common/discordReplace');
+const { connectionErrorEmbed } = require('../../functions/errors/connectionErrorEmbed');
 
 module.exports =
 {

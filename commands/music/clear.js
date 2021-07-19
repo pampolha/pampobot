@@ -1,6 +1,7 @@
 const { distube } = require('../../functions/distube/distubeClient');
 
-const { checkDM } = require('../../functions/checkDM');
+const { checkDM } = require('../../functions/common/checkDM');
+
 const { MessageEmbed } = require('discord.js');
 
 module.exports =
