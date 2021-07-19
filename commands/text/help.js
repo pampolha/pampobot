@@ -1,6 +1,6 @@
 const { checkDM } = require('../../functions/common/checkDM');
-const { texto } = require('../../data/textCommands');
-const { musica } = require('../../data/musicCommands');
+const { texto } = require('../../data/help/textCommands');
+const { musica } = require('../../data/help/musicCommands');
 
 const Discord = require('discord.js');
 
