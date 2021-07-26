@@ -5,7 +5,7 @@ const { logSlash } = require('../../functions/common/logSlash');
 
 module.exports =
 {
-    name: 'Vote',
+    name: 'vote',
     aliases: ['voto', 'votar', 'topgg'],
     description: 'Retorna o link de voto para o pampobot no top.gg',
     slash: 'both',
