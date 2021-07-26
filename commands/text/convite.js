@@ -6,7 +6,7 @@ const { logSlash } = require('../../functions/common/logSlash');
 module.exports =
 {
     name: 'convite',
-    aliases: ['invite'],
+    aliases: ['invite', 'link'],
     description: 'Retorna o link de convite do pampobot',
     slash: 'both',
     testOnly: false,

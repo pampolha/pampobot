@@ -17,9 +17,9 @@ const texto =
 { name: 'Sus:', value: '`>sus`...' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false }],
 
-[{ name: 'GitHub:', value: 'Você pode ir ao meu repositório do GitHub ao usar: `>github | >git`.' +
+[{ name: 'GitHub:', value: 'Você pode ir ao meu repositório do GitHub ao usar: `>github | >git | >repo`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false },
-{ name: 'Convite:', value: 'Você pode adicionar o pampobot a outros servidores ao usar: `>convite | >invite`.' +
+{ name: 'Convite:', value: 'Você pode adicionar o pampobot a outros servidores ao usar: `>convite | >invite | >link`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false },
 { name: 'Escolher jogo:', value: 'Vou escolher um jogo de uma biblioteca steam quando você usar: `escolherjogo | steam | escolher | jogo <SteamID>`\n' +
 '*Você pode verificar seu SteamID ao ver os detalhes da sua conta na Steam.*' +

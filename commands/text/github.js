@@ -6,7 +6,7 @@ const { logSlash } = require('../../functions/common/logSlash');
 module.exports =
 {
     name: 'github',
-    aliases: ['git'],
+    aliases: ['git', 'repo'],
     description: 'Retorna o link do repositório aberto do pampobot no github',
     slash: 'both',
     testOnly: false,
