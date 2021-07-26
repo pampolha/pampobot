@@ -23,6 +23,8 @@ const texto =
 '\n*Suporte para comando de `/`:*  ✅', inline: false },
 { name: 'Escolher jogo:', value: 'Vou escolher um jogo de uma biblioteca steam quando você usar: `escolherjogo | steam | escolher | jogo <SteamID>`\n' +
 '*Você pode verificar seu SteamID ao ver os detalhes da sua conta na Steam.*' +
+'\n*Suporte para comando de `/`:*  ✅', inline: false },
+{ name: 'Vote:', value: 'Você pode apoiar o pampobot votando nele ao usar: `>vote | >voto | >votar | >topgg`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false }]];
 
 module.exports = { texto };
