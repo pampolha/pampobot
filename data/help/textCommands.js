@@ -1,3 +1,4 @@
+// array[0][4 objetos por vez]. 
 const texto =
 [[{ name: 'Cara ou coroa:', value: 'Jogue uma moeda e veja o resultado usando: `>caracoroa | >c | >cc`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false },

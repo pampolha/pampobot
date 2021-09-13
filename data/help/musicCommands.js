@@ -1,3 +1,4 @@
+// array[0][4 objetos por vez]. 
 const musica = 
 [[{ name: 'Play:', value: 'Pesquise uma música no youtube e selecione o resultado usando: `>play | >p <link ou texto para pesquisar>`.', inline: false },
 { name: 'Play first:', value: 'Toque a primeira música encontrada com a pesquisa usando: `>playfirst | >playf | >pf <link ou texto para pesquisar>`.', inline: false },
@@ -11,6 +12,7 @@ const musica =
 'Para ver o filtro atual e os disponíveis, use apenas `>filter`.', inline: false },
 { name: 'Clear:', value: 'Limpe todas as músicas da queue, deixando apenas a música atual usando: `>clear | >cl`.', inline: false }],
 
-[{ name: 'Autoplay:', value: 'Ligue ou desligue o autoplay (tocar músicas recomendadas mesmo após a queue acabar) ao usar: `autoplay | >ap`.', inline: false }]];
+[{ name: 'Autoplay:', value: 'Ligue ou desligue o autoplay (tocar músicas recomendadas mesmo após a queue acabar) ao usar: `>autoplay | >ap`.', inline: false },
+{ name: 'Loop:', value: 'Ligue ou desligue o loop da música atual ao usar: `>loop | >lp`.', inline: false }]];
 
 module.exports = { musica };

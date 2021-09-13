@@ -27,7 +27,16 @@ module.exports =
         }
         else
         {
-            distube.skip(message);
+            if (queue.repeatMode !== 0)
+            {
+              distube.setRepeatMode(message, 0);
+              distube.skip(message);
+              distube.setRepeatMode(message, 1);
+            }
+            else
+            {
+              distube.skip(message);
+            }
 
             embed
             .setDescription(`"${discordReplace(queue.songs[0].name)}" - \`${queue.songs[0].formattedDuration}\`\n` + 

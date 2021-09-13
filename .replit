@@ -1,2 +1,2 @@
-run = "npm run app"
-language = "javascript"
+run = "npx node index.js"
+language = "node.js"
