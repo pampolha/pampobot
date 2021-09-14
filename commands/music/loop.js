@@ -31,13 +31,13 @@ module.exports =
             {
               distube.setRepeatMode(message, 1);
       
-              embed.setDescription(`O loop da música atual foi ligado por ${message.author}`)
+              embed.setDescription(`O loop da música atual foi ligado por ${message.author}`);
             }
             else
             {
               distube.setRepeatMode(message, 0);
 
-              embed.setDescription(`O loop da música atual foi desligado por ${message.author}`)
+              embed.setDescription(`O loop da música atual foi desligado por ${message.author}`);
             }
 
             embed
