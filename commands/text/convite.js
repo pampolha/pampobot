@@ -16,7 +16,7 @@ module.exports =
 
         const embed = new MessageEmbed()
         .setTitle('Clique aqui para adicionar o pampobot a outros servidores!')
-        .setURL('https://discord.com/api/oauth2/authorize?client_id=830117848034181211&permissions=0&scope=bot%20applications.commands')
+        .setURL('https://discord.com/api/oauth2/authorize?client_id=830117848034181211&permissions=3205184&scope=bot%20applications.commands')
         .setColor('BLUE');
 
         if (!message) 
