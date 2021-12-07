@@ -25,7 +25,7 @@ client.on('ready', async () =>
 {
 	new WOKCommands(client,
 		{
-			commandsDir: '/commands/',
+			commandsDir: './commands',
 			testServers: [testesID],
 			showWarns: false,
 			ignoreBots: true,

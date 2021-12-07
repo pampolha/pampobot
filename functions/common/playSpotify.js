@@ -1,53 +1,28 @@
-const { getTracks, getPreview } = require('spotify-url-info');
 const { distube } = require('../distube/distubeClient');
 const { connectionErrorEmbed } = require('../errors/connectionErrorEmbed');
+const { isTrackOrPlaylist, validateURL, trackGet, playListGet } = require('spotify-to-yt');
+const { getPreview } = require('spotify-url-info');
 
-function playSpotify(message, text) {
-    const nome = new Array;
-    const artista = new Array;
-    let playlistName = new String;
+async function playSpotify(message, text) {
+    if (await validateURL(text) === false) {
+        return connectionErrorEmbed('linkInvalido', message);
+    }
+    message.react('🆗');
 
-    getPreview(text).then(preview => playlistName = preview.title);
-
-    getTracks(text).then(data => {
-        data.forEach(track => {
-            artista.push(track.artists[0].name);
-            nome.push(track.name);
-        });
-
-        message.react('🆗');
-        
-        if (nome.length > 1) {
-            const playlist = new Array;
-
-            for (let i = 0; i < nome.length; i++) {
-                distube.search(nome[i] + ' ' + artista[i])
-                .then(result => {
-                    result = result.filter(element => element.formattedDuration);
-                    playlist.push(result[0].url);
-                
-                    if (i === nome.length - 1) {
-                        try {
-                            return distube.playCustomPlaylist(message, playlist, { name: playlistName });
-                        } catch (err) {
-                            return connectionErrorEmbed(err, message);
-                        }
-                    }
-                });
-            }
-        }
-        else {
-            try {
-                return distube.play(message, nome[0] + ' ' + artista[0]);
-            }
-            catch(err) {
-                return connectionErrorEmbed(err, message);
-            }
-        }
-    })
-    .catch(err => {
-        return connectionErrorEmbed(err, message);
-    });
-}
+    if (await isTrackOrPlaylist(text) == 'track') {
+        const track = await trackGet(text).then(gotTrack => gotTrack.url)
+        .catch(err => connectionErrorEmbed(err, message));
+        return distube.play(message, track)
+        .catch(err => connectionErrorEmbed(err, message));
+    }
+    else {
+        const playlistName = await getPreview(text).then(preview => preview.title)
+        .catch(err => connectionErrorEmbed(err, message));
+        const playlist = await playListGet(text).then(gotPlaylist => gotPlaylist.songs)
+        .catch(err => connectionErrorEmbed(err, message));
+        return distube.playCustomPlaylist(message, playlist, { name: playlistName })
+        .catch(err => connectionErrorEmbed(err, message));
+    }            
+} 
 
 module.exports = { playSpotify };
