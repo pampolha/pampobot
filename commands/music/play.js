@@ -4,6 +4,7 @@ const { checkDM } = require('../../functions/common/checkDM');
 const { MessageEmbed } = require('discord.js');
 const { playSpotify } = require('../../functions/common/playSpotify');
 const { musicSearch } = require('../../functions/common/musicSearch');
+const { connectionErrorEmbed } = require('../../functions/errors/connectionErrorEmbed')
 
 module.exports =
 {
@@ -34,9 +35,10 @@ module.exports =
 
             return message.channel.send(embed);
         }
-        else if (text.startsWith('https://www.youtube.com/watch?v') || text.startsWith('https://www.youtube.com/playlist?list') || text.startsWith('>p https://youtu.be/'))
+        else if (text.startsWith('https://www.youtube.com/watch?v') || text.startsWith('https://www.youtube.com/playlist?list') || text.startsWith('https://youtu.be/'))
         {
-            distube.play(message, text);
+            distube.play(message, text)
+            .catch (err => connectionErrorEmbed(err, message));
         }
         else if (text.startsWith('https://open.spotify.com/'))
         {

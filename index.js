@@ -76,3 +76,5 @@ client.on('voiceStateUpdate', (oldState, newState) =>
 
 // login do bot com token
 client.login(process.env.BOT_TOKEN);
+
+module.exports = { client }

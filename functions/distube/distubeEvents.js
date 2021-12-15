@@ -78,7 +78,7 @@ const distubeEvents = distube =>
         else if (err.message.includes('Unsupported URL'))
         {
             embed
-            .setDescription('Eu apenas posso acessar links do YouTube!')
+            .setDescription('Eu não consigo acessar essa URL!')
             .setColor('RED');
             
             return message.channel.send(embed);
