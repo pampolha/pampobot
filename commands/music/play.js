@@ -34,7 +34,7 @@ module.exports =
 
             return message.channel.send(embed);
         }
-        else if (text.startsWith('https://www.youtube.com/watch?v') || text.startsWith('https://www.youtube.com/playlist?list'))
+        else if (text.startsWith('https://www.youtube.com/watch?v') || text.startsWith('https://www.youtube.com/playlist?list') || text.startsWith('>p https://youtu.be/'))
         {
             distube.play(message, text);
         }
