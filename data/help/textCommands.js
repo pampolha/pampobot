@@ -28,7 +28,7 @@ const texto =
 { name: 'Vote:', value: 'Você pode apoiar o pampobot votando nele ao usar: `>vote | >voto | >votar | >topgg`.' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false }],
 
-[{ name: 'Profile', value: 'Vou retornar a imagem íntegra de perfil de um usuário ou do seu quando você usar: `>profile | >pfp [@usuário]`' +
+[{ name: 'Profile', value: 'Vou retornar a imagem íntegra de perfil de um usuário ou do seu quando você usar: `>profile | >pfp [@usuário ou id]`' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false }]];
 
 module.exports = { texto };

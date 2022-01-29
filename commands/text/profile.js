@@ -7,7 +7,7 @@ module.exports =
     name: 'profile',
     aliases: ['pfp'],
     slash: 'both',
-    expectedArgs: '[perfil]',
+    expectedArgs: '[mencao_ou_id]',
     description: 'Vou retornar a imagem íntegra de perfil de um usuário ou do seu!',
     callback: async ({ message, args, interaction, client }) => {
         if (checkDM(message, interaction)) return console.log('Comando bloquado na DM.');
