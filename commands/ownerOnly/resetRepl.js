@@ -5,7 +5,8 @@ module.exports = {
   slash: false,
   testOnly: false,
   ownerOnly: true,
-  callback: () => {
+  callback: (message) => {
+    message.react('🆗');
     return exec('kill 1');
   }
 }
