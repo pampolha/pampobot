@@ -4,8 +4,8 @@
   "description": "Fazendo meu segundo bot, meu primeiro projeto em node.js!",
   "main": "main.js",
   "scripts": {
-    "app": "node main",
-    "dev": "nodemon main"
+    "app": "node index",
+    "dev": "nodemon index"
   },
   "author": "Gabriel Pampolha: contato.gabrielpampolha@gmail.com",
   "license": "ISC",

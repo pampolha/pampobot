@@ -26,6 +26,9 @@ const texto =
 '*Você pode verificar seu SteamID ao ver os detalhes da sua conta na Steam.*' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false },
 { name: 'Vote:', value: 'Você pode apoiar o pampobot votando nele ao usar: `>vote | >voto | >votar | >topgg`.' +
+'\n*Suporte para comando de `/`:*  ✅', inline: false }],
+
+[{ name: 'Profile', value: 'Vou retornar a imagem íntegra de perfil de um usuário ou do seu quando você usar: `>profile | >pfp [@usuário]`' +
 '\n*Suporte para comando de `/`:*  ✅', inline: false }]];
 
 module.exports = { texto };
