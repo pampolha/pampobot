@@ -15,21 +15,22 @@ module.exports =
         let perfil;
         if (!args[0]) {
             if (message) {
-                perfil = message.author;
+                console.log(message.author.id);
+                perfil = await client.users.fetch(message.author.id);
             }
             else {
                 perfil = await client.users.fetch(interaction.member.user.id);
             }
         }
         else {
-            perfil = message.mentions.users.first();
+            perfil = await client.users.fetch(args[0].replace(/[<!@>]/gim, ''));
         }
 
         const embed = new MessageEmbed();
         try {
             embed.setImage(perfil.displayAvatarURL({ dynamic: true, size: 4096 }));
             embed.setColor('BLUE');
-            embed.setAuthor(`Eis a imagem de perfil de ${perfil.username}`);
+            embed.setAuthor(`Eis a imagem de perfil de ${perfil.username}:`);
         } catch (e) {
             embed.setColor('RED');
             embed.setDescription('Não foi possível adquirir a imagem de do perfil solicitado.');
