@@ -32,7 +32,7 @@ const musicSearch = (text, embed, message) => {
                     collected = collected.map(msg => msg);
 
                     let chosenIndex;
-                    if (collected[0]) chosenIndex = collected[0].content.match(/[12345]/);
+                    if (collected[0]) chosenIndex = collected[0].content.match(/^[12345]$/);
 
                     if (chosenIndex)
                     {

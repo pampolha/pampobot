@@ -1,4 +1,5 @@
 # pampolha
+.env
 *.eslint
 *.vscode
 *.github
