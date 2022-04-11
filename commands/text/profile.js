@@ -13,6 +13,8 @@ module.exports =
         if (checkDM(message, interaction)) return console.log('Comando bloquado na DM.');
 
         let perfil;
+        const embed = new MessageEmbed();
+
         if (!args[0]) {
             if (message) {
                 console.log(message.author.id);
@@ -23,17 +25,20 @@ module.exports =
             }
         }
         else {
-            perfil = await client.users.fetch(args[0].replace(/[<!@>]/gim, ''));
+            try {
+                perfil = await client.users.fetch(args[0].replace(/[<!@>]/gim, ''));  
+            } catch (e) {
+               // anything that is not a mention will be ignored
+            }
         }
 
-        const embed = new MessageEmbed();
         try {
             embed.setImage(perfil.displayAvatarURL({ dynamic: true, size: 4096 }));
             embed.setColor('BLUE');
             embed.setAuthor(`Eis a imagem de perfil de ${perfil.username}:`);
         } catch (e) {
             embed.setColor('RED');
-            embed.setDescription('Não foi possível adquirir a imagem de do perfil solicitado.');
+            embed.setDescription('Não foi possível adquirir a imagem de do perfil solicitado.' + '\n' + 'Faça uma menção do usuário que deseja ter a foto.');
             console.error(e);
         }
         
